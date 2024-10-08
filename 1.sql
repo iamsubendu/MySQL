@@ -22,7 +22,6 @@ CREATE TABLE bands(
 -- NOT NULL -> so undefined data can't be recorded
 -- PRIMARY KEY -> primary identifying column for the table & it must be unique
 
-
 CREATE TABLE albums(
 	id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
