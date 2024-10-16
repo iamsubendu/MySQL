@@ -1,19 +1,20 @@
--- Query a list of CITY names from STATION for cities that have an even ID number.
--- Print the results in any order, but exclude duplicates from the answer.
-SELECT DISTINCT city FROM station WHERE MOD(ID,2)=0;
+SELECT id, name
+FROM albums
+GROUP BY name;
+-- will throw error
+-- When you group by name, SQL needs to know how to handle the id 
+-- column because it doesn't know which id to show for each name.
 
+-- In SQL, when you group data, you can only select:
+-- Columns that you are grouping by (like name), or
+-- Columns that are summarized (like using SUM, COUNT, etc.).
 
--- Find the difference between the total number of CITY entries in the table and 
--- the number of distinct CITY entries in the table.
-SELECT COUNT(city) - COUNT(DISTINCT city) AS difference FROM station;
+SELECT id, name
+FROM albums
+GROUP BY id, name;
 
+-- or
 
--- Query the two cities in STATION with the shortest and longest CITY names, 
--- as well as their respective lengths (i.e.: number of characters in the name). 
--- If there is more than one smallest or largest city, choose the one that 
--- comes first when ordered alphabetically.
-(select name from albums order by length(name) desc limit 1)
-UNION
-(select name from albums order by length(name) limit 1);
-
-
+SELECT MIN(id) AS id, name
+FROM albums
+GROUP BY name;

@@ -1,18 +1,29 @@
-CREATE DATABASE test;--  to create database schema
+CREATE DATABASE IF NOT EXISTS test;
+-- to create database schema
+-- only create if not exist to avoid error
 
-DROP DATABASE test;--  to delete database schema
+DROP DATABASE IF EXISTS test;--  to delete database schema
+-- only drop if exist to avoid error
 
-CREATE DATABASE record_company;
+CREATE DATABASE IF NOT EXISTS record_company;
 
-USE record_company;--  using the database created for further operations
+USE record_company;
+-- using the database created for further operations
 
-CREATE TABLE test( test_column INT );-- creating a table with a column specifying its dataType
+SHOW DATABASES; 
+-- show databases
 
--- if we want to add one more column and if we change the above syntax directly, we will loose whole data
+SHOW TABLES; 
+-- show tables
 
-ALTER TABLE test ADD another_column VARCHAR(255);-- Adding another columnn in previous table
+CREATE TABLE test( test_column INT );
+-- creating a table with a column specifying its dataType
+-- if we want to add one more column and if we change the 
+-- above syntax directly, we will loose whole data
+ALTER TABLE test ADD another_column VARCHAR(255);
+-- Adding another columnn in previous table
 
-DROP TABLE test;-- delete table
+DROP TABLE IF EXIST test;-- delete table
 
 CREATE TABLE bands(
 	id INT NOT NULL AUTO_INCREMENT,
@@ -30,5 +41,20 @@ CREATE TABLE albums(
     PRIMARY KEY (id),
     FOREIGN KEY (band_id) REFERENCES bands(id)
 );
-
 -- FOREIGN KEY -> to add reference from another table
+
+CREATE TABLE student(
+	id INT PRIMARY KEY,
+    name VARCHAR(50) DEFAULT "Shyam",
+    city VARCHAR(50) DEFAULT "Hyderabad",
+    age INT NOT NULL,
+    CONSTRAINT age_chek CHECK (age >=18 AND city="Hyderabad")
+);
+
+CREATE TABLE student2(
+	id INT PRIMARY KEY,
+    name VARCHAR(50) DEFAULT "Shyam",
+    city VARCHAR(50) DEFAULT "Hyderabad",
+    age INT NOT NULL CHECK (age >=18)
+);
+

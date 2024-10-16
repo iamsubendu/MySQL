@@ -11,33 +11,26 @@ SELECT name FROM albums;
 SELECT DISTINCT name FROM albums;
 -- to get unique values
 
-UPDATE albums 
-SET release_year = 1982
-WHERE id=1;
--- update data from table
-
-SELECT * FROm albums
+SELECT * FROM albums
 WHERE release_year < 2000;
 
 SELECT * FROM albums
 WHERE name LIKE '%ar%' OR band_id=2;
 -- % means anything and any amount of characters
+-- forward and backward
+-- as it placed on both side of ar
 
-SELECT * FROM albums
-WHERE release_year=2023 AND band_id=1;
+UPDATE albums 
+SET release_year = 1982
+WHERE id=1;
+-- update data from table
 
-SELECT * FROM albums
-WHERE release_year BETWEEN 2000 AND 2023;
+UPDATE albums 
+SET release_year =  release_year + 20;
+-- to update each data by 20
 
-SELECT * FROM albums
-WHERE release_year IS NUll;
+DELETE FROM albums 
+WHERE release_year < 2024;
 
 DELETE FROM albums
 WHERE id=6;
-
-
-
-
-
-
-
