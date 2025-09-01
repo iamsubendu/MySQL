@@ -1,14 +1,23 @@
-SELECT release_year, COUNT(band_id) FROM albums
-GROUP BY release_year;
+-- Julia asked her students to create some coding challenges. Write a query 
+-- to print the hacker_id, name, and the total number of challenges created 
+-- by each student. Sort your results by the total number of challenges in 
+-- descending order. If more than one student created the same number of 
+-- challenges, then sort the result by hacker_id. If more than one student 
+-- created the same number of challenges and the count is less than the maximum 
+-- number of challenges created, then exclude those students from the result.
 
--- Get release year which has max count
+-- Input Format
 
-SELECT release_year
-FROM (
-  SELECT release_year, COUNT(band_id) AS count
-  FROM albums
-  GROUP BY release_year
-  ORDER BY count DESC
-) AS subquery
-LIMIT 1;
+-- The following tables contain challenge data:
+
+-- Hackers: The hacker_id is the id of the hacker, and name is the name of the hacker.
+
+-- Challenges: The challenge_id is the id of the challenge, and hacker_id is the 
+-- id of the student who created the challenge.
+
+SELECT h.hacker_id,h.name,COUNT(c.challenge_id) as totalChallengesCreated
+FROM hackers hacker
+INNER JOIN challenges c 
+ON h.hacker_id=c.hacker_id
+GROUP BY totalChallengesCreated DESC,h.hacker_id;
 

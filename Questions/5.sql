@@ -1,27 +1,14 @@
--- Ketty gives Eve a task to generate a report containing three columns: 
--- Name, Grade and Mark. Ketty doesn't want the NAMES of those students who 
--- received a grade lower than 8. The report must be in descending order 
--- by grade -- i.e. higher grades are entered first. If there is more than 
--- one student with the same grade (8-10) assigned to them, order those 
--- particular students by their name alphabetically. Finally, if the grade 
--- is lower than 8, use "NULL" as their name and list them by their grades 
--- in descending order. If there is more than one student with the same 
--- grade (1-7) assigned to them, order those particular students by 
--- their marks in ascending order.
+SELECT release_year, COUNT(band_id) FROM albums
+GROUP BY release_year;
 
-SELECT 
-  CASE 
-    WHEN g.grade < 8 THEN NULL 
-    ELSE s.name 
-  END AS Name,
-  CASE 
-    WHEN g.min_mark <= s.marks AND s.marks <= g.max_mark THEN g.grade 
-    ELSE NULL 
-  END AS Grade,
-  s.marks
-FROM students s
-JOIN grades g ON g.min_mark <= s.marks AND s.marks <= g.max_mark
-ORDER BY 
-  Grade DESC,
-  Name,
-  marks;
+-- Get release year which has max count
+
+SELECT release_year
+FROM (
+  SELECT release_year, COUNT(band_id) AS count
+  FROM albums
+  GROUP BY release_year
+  ORDER BY count DESC
+) AS subquery
+LIMIT 1;
+

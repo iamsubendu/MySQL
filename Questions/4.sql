@@ -1,37 +1,32 @@
--- Case & Expression
--- Gives value when condition is met or provide null
--- when no condition is met
+-- Their are 3 roles in user defined by A,B,C
+ 
+-- A  Admin
+-- B  Sales
+-- C  User
 
-CASE
-    WHEN condition1 THEN result1
-    WHEN condition2 THEN result2
-    WHEN condition3 THEN result3
-    ELSE other_result
+-- Their are 3 pages which have different access
+ 
+-- Home          A  S  U
+-- Add User      A  S
+-- Delete User   A
+ 
+-- In input we will pass (pageName,role)
+ 
+-- ex: 'Home',A
+ 
+-- Write a query if its true or not
+
+access_query = """
+SELECT CASE
+    WHEN (:pageName = 'Home' AND :role IN ('A', 'S', 'U')) THEN TRUE
+    WHEN (:pageName = 'Add User' AND :role IN ('A', 'S')) THEN TRUE
+    WHEN (:pageName = 'Delete User' AND :role = 'A') THEN TRUE
+    ELSE FALSE
 END;
+"""
 
-SELECT cust_id,amount
-CASE 
-    WHEN amount > 100 THEN "Expenside"
-    WHEN amount = 100 THEN "Moderate"
-    ELSE "Inexpensive"
-END AS productStatus
-FROM payment;
+result = access_query.execute(pageName='Home', role='A')  # returns TRUE
+result = access_query.execute(pageName='Add User', role='S')  # returns TRUE
+result = access_query.execute(pageName='Delete User', role='U')  # returns FALSE
 
--- =========================================
 
--- Providing value instead of condition
-
-CASE Expression
-    WHEN value1 THEN result1
-    WHEN value2 THEN result2
-    WHEN value3 THEN result3
-    ELSE other_result
-END;
-
-SELECT cust_id,amount
-CASE amount
-    WHEN 500  THEN "Prime Customer"
-    WHEN 100 THEN "Plus Customer"
-    ELSE "Regular Customer"
-END AS customerStatus
-FROM payment;

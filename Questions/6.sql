@@ -1,32 +1,37 @@
--- Their are 3 roles in user defined by A,B,C
- 
--- A  Admin
--- B  Sales
--- C  User
+-- Harry Potter and his friends are at Ollivander's with Ron, 
+-- finally replacing Charlie's old broken wand.
 
--- Their are 3 pages which have different access
- 
--- Home          A  S  U
--- Add User      A  S
--- Delete User   A
- 
--- In input we will pass (pageName,role)
- 
--- ex: 'Home',A
- 
--- Write a query if its true or not
+-- Hermione decides the best way to choose is by determining the 
+-- minimum number of gold galleons needed to buy each non-evil wand 
+-- of high power and age. Write a query to print the id, age, coins_needed, 
+-- and power of the wands that Ron's interested in, sorted in order of 
+-- descending power. If more than one wand has same power, sort the result 
+-- in order of descending age.
 
-access_query = """
-SELECT CASE
-    WHEN (:pageName = 'Home' AND :role IN ('A', 'S', 'U')) THEN TRUE
-    WHEN (:pageName = 'Add User' AND :role IN ('A', 'S')) THEN TRUE
-    WHEN (:pageName = 'Delete User' AND :role = 'A') THEN TRUE
-    ELSE FALSE
-END;
-"""
+-- Input Format
 
-result = access_query.execute(pageName='Home', role='A')  # returns TRUE
-result = access_query.execute(pageName='Add User', role='S')  # returns TRUE
-result = access_query.execute(pageName='Delete User', role='U')  # returns FALSE
+-- The following tables contain data on the wands in Ollivander's inventory:
+
+-- Wands: The id is the id of the wand, code is the code of the wand, 
+-- coins_needed is the total number of gold galleons needed to buy the wand, 
+-- and power denotes the quality of the wand (the higher the power, the 
+-- better the wand is).
+
+-- Wands_Property: The code is the code of the wand, age is the age of the wand, 
+-- and is_evil denotes whether the wand is good for the dark arts. If the value 
+-- of is_evil is 0, it means that the wand is not evil. The mapping between code 
+-- and age is one-one, meaning that if there are two pairs,  and , then  and .
 
 
+SELECT W.id, WP.age, W.coins_needed, W.power
+FROM Wands W
+INNER JOIN Wands_Property WP
+  ON W.code = WP.code
+WHERE WP.is_evil = 0
+  AND W.coins_needed = (
+    SELECT MIN(W1.coins_needed)
+    FROM Wands W1
+    WHERE W1.code = W.code
+      AND W1.power = W.power
+  )
+ORDER BY W.power DESC, WP.age DESC;

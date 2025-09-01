@@ -1,16 +1,16 @@
-## 1
+## Mistake 1
 
 SELECT \* FROM city WHERE population > 100000 AND countrycode = USA;
 -> wrong - USA isn't in inverted comma
 
 SELECT \* FROM city WHERE population > 100000 AND countrycode = 'USA';
 
-## 2
+## Mistake 2
 
 The AS keyword causes errors, so follow this convention: "Select t.Field
 From table1 t" instead of "select t.Field From table1 AS t
 
-## 3
+## Mistake 3
 
 SELECT a.id FROM albums a
 JOIN bands b ON a.id = b.id
@@ -19,13 +19,18 @@ LIMIT 1,2;
 
 We mustn't use where when we use JOIN.
 
-The WHERE clause might not work as expected in LEFT JOIN or RIGHT JOIN because it can remove rows that the join would normally keep. To avoid this, you should move any filter conditions related to the right (or left) table into the ON clause. This will make sure the join behaves as expected, keeping the rows that should be retained by the outer join.
+The WHERE clause might not work as expected in LEFT JOIN or RIGHT JOIN because it can remove rows that
+the join would normally keep. To avoid this, you should move any filter conditions related to the right
+(or left) table into the ON clause. This will make sure the join behaves as expected, keeping
+the rows that should be retained by the outer join.
 
 ## 4. UNION vs UNION ALL
 
-The UNION operator combines the result sets of two or more SELECT statements, removing duplicate rows. It returns only distinct rows.
+The UNION operator combines the result sets of two or more SELECT statements, removing duplicate
+rows. It returns only distinct rows.
 
-The UNION ALL operator combines the result sets of two or more SELECT statements, including duplicate rows. It returns all rows, including duplicates.
+The UNION ALL operator combines the result sets of two or more SELECT statements, including
+duplicate rows. It returns all rows, including duplicates.
 
 ## 5. While creating and droping
 
@@ -42,6 +47,9 @@ PRIMARY KEY (id,name)
 Here name can be same, but combination of id & name will be different
 
 ## 7. Group by
+
+The HAVING clause is used to filter records after the aggregation has been performed.
+It is often used with GROUP BY to filter groups based on aggregate functions.
 
 We must use group by with aggregate functions
 
@@ -132,3 +140,28 @@ SELECT MAX(name)
 FROM (SELECT \* FROM albums WHERE release_year=2025) as temp;
 
 -> we need to use alias when we use sub query in FROM
+
+## Advantages of using MySQL?
+
+Flexibility: MySQL runs on all operating systems
+
+Power: MySQL focuses on performance
+
+Enterprise-Level SQL Features: MySQL had for some time been lacking in advanced features
+such as subqueries, views, and stored procedures.
+
+Full-Text Indexing and Searching
+
+Query Caching: This helps enhance the speed of MySQL greatly
+
+Replication: One MySQL server can be duplicated on another, providing numerous advantages
+
+Configuration and Security
+
+## What is Sharding in SQL?
+
+The process of breaking up large tables into smaller chunks (called shards) that are spread
+across multiple servers is called Sharding.
+
+The advantage of Sharding is that since the sharded database is generally much smaller
+than the original; queries, maintenance, and all other tasks are much faster.

@@ -13,6 +13,8 @@ SELECT DISTINCT name FROM albums;
 
 SELECT * FROM albums
 WHERE release_year < 2000;
+-- The WHERE clause is used to filter records before any groupings are made. 
+-- It specifies conditions on individual rows in a table.
 
 SELECT * FROM albums
 WHERE name LIKE '%ar%' OR band_id=2;
@@ -20,17 +22,3 @@ WHERE name LIKE '%ar%' OR band_id=2;
 -- forward and backward
 -- as it placed on both side of ar
 
-UPDATE albums 
-SET release_year = 1982
-WHERE id=1;
--- update data from table
-
-UPDATE albums 
-SET release_year =  release_year + 20;
--- to update each data by 20
-
-DELETE FROM albums 
-WHERE release_year < 2024;
-
-DELETE FROM albums
-WHERE id=6;
